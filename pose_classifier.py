@@ -13,6 +13,7 @@
 ###             Left arm up  | L
 ###             idle         | i
 ###             NO_USER      | N
+###             Facing away  | F
 ###
 ######################################
 import mediapipe as mp
@@ -29,39 +30,54 @@ class Poseclass():
         # import Lanmdmarks class as lm.
         lm = landmarks.Landmarks(results)
 
-        # check visibility of user wrists to determine idle position or other.
-        if ((lm.LWST.visibility > 0.5) or (lm.RWST.visibility > 0.5)):
-            
-            # check for each of the 5 other positions.
-                if (((lm.LWST.y < lm.LLBW.y) and (lm.RWST.y < lm.RLBW.y)) and 
-                ((lm.LWST.x < lm.RWST.x) and (lm.RWST.x > lm.LWST.x))):
-                        pose_char = "X"
-                        print("crossed arms")
-            
-                elif ((lm.LWST.y < lm.LSDR.y) and (lm.RWST.y < lm.RSDR.y)):
-                        pose_char = "B"
-                        print("both arms up")
-            
-                elif ((lm.RWST.y < lm.RSDR.y) and (lm.LWST.y > lm.LSDR.y)):
-                        pose_char = "R"
-                        print("right arm up")
-            
-                elif ((lm.LWST.y < lm.LSDR.y) and (lm.RWST.y > lm.RSDR.y)):
-                        pose_char = "L"
-                        print("left arm up")
-            
-                elif (lm.LLBW.y >= lm.LSDR.y) and (lm.RLBW.y >= lm.RSDR.y):
-                        pose_char = "i"
-                        print("idle")
-                else:
-                        pose_char = "N"
-                        print("NO_USER")
+        # facing away from camera
+        if (lm.LEAR.x < lm.REAR.x):
+                pose_char = 'F'
+                print("facing away")
         else:
-            pose_char = "i"
-            print("idle")
+                
+        # check visibility of user wrists to determine idle position or other.
+                if ((lm.LWST.visibility > 0.5) or (lm.RWST.visibility > 0.5)):
+                
+                        # check for each of the 5 other positions.
+                        if (((lm.LWST.y < lm.LLBW.y) and (lm.RWST.y < lm.RLBW.y)) and 
+                        ((lm.LWST.x < lm.RWST.x) and (lm.RWST.x > lm.LWST.x))):
+                                pose_char = 'X'
+                                print("crossed arms")
+                
+                        elif ((lm.LWST.y < lm.LSDR.y) and (lm.RWST.y < lm.RSDR.y)):
+                                pose_char = 'B'
+                                print("both arms up")
+                
+                        elif ((lm.RWST.y < lm.RSDR.y) and (lm.LWST.y > lm.LSDR.y)):
+                                pose_char = 'R'
+                                print("right arm up")
+                
+                        elif ((lm.LWST.y < lm.LSDR.y) and (lm.RWST.y > lm.RSDR.y)):
+                                pose_char = 'L'
+                                print("left arm up")
+                
+                        elif (lm.LLBW.y >= lm.LSDR.y) and (lm.RLBW.y >= lm.RSDR.y):
+                                pose_char = 'i'
+                                print("idle")
+                        else:
+                                pose_char = 'N'
+                                print("NO_USER")
+                else:
+                        pose_char = 'i'
+                        print("idle")
         
         # return current pose.
         return pose_char
+
+
+    
+
+
+
+
+
+    
 
 
     
