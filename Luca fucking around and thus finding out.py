@@ -7,7 +7,7 @@ baud_rate = 57600  # Change this to the appropriate baud rate for your flight co
 master = mavutil.mavlink_connection(connection_string, baud=baud_rate)
 
 # Wait for the connection to be established
-while not master.is_heartbeat_alive():
+while mavutil.wait_heartbeat():
     print('Waiting for heartbeat...')
     time.sleep(1)
 
