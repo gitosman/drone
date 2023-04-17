@@ -3,7 +3,7 @@ from pymavlink import mavutil
 
 # Set up connection to flight controller
 connection_string = '/dev/tty/THS1'  # Change this to the appropriate connection string for your flight controller
-baud_rate = 9600  # Change this to the appropriate baud rate for your flight controller
+baud_rate = 96000  # Change this to the appropriate baud rate for your flight controller
 master = mavutil.mavlink_connection(connection_string, baud=baud_rate)
 
 # Wait for the connection to be established
