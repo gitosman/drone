@@ -92,6 +92,12 @@ while i != 2:
                 alt.abs_pressure1 / 101325) ** 0.1903) * 145366.45 / 3048.0  # Calculate altitude using barometric pressure
         print("Altitude: {:.2f} meters".format(altitude))
         
+        # ALTITUDE (GPS)
+    msg = master.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
+    if msg:
+        altitude = msg.alt / 1000.0  # Convert altitude from millimeters to meters
+        print("Altitude: {:.2f} meters".format(altitude))
+        
     # BATTERY
     bat = master.recv_match(type='SYS_STATUS', blocking=True)
     if bat is not None:
