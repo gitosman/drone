@@ -85,7 +85,7 @@ while i != 2:
     pitch = (att.pitch)
     yaw = (att.yaw)
     print(f'Roll: {math.degrees(roll)}, Pitch: {math.degrees(pitch)}, Yaw: {math.degrees(yaw)}')
-    # ALTITUDE
+    # ALTITUDE (Barometer)
     alt = master.recv_match(type='EXTENDED_SYS_STATE', blocking=True)
     if alt:
         altitude = (1 - (
