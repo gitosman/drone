@@ -1,6 +1,6 @@
 from pymavlink import mavutil
 from horizon import DEG
-from Nombre_3 import master
+from mav_init import master
 
 absolute_angle = abs(DEG)
 direction = 0
