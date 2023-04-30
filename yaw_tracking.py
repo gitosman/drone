@@ -1,4 +1,3 @@
-#import deez 
 from pymavlink import mavutil
 from horizon import DEG
 from Nombre_3 import master
@@ -22,5 +21,15 @@ master.mav.command_long_send(
     0, #relative
     0,0,0
 )
+
+def yaw_tracking_waiting():
+
+    while True:
+        message = master.recv_match(type='COMMAND_ACK', blocking=True)
+        if message.command == mavutil.MAV_CMD_CONDITION_YAW and message.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+            print("COMPLETE")
+            break
+    return True
+   
 
 
