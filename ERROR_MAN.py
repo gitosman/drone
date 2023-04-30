@@ -50,5 +50,12 @@ class SERIOUS(object):
 
         f.write("Ardupilot error at {error_time}")
 
-
+    def arming_error():
+        
+        f.write("Arming error at {error_time}")
+       
+    def disarming_error():
+        
+        f.write("Disarming error at {error_time}")
+        
 f.close()
