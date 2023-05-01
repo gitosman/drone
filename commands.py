@@ -1,7 +1,5 @@
 from pymavlink import mavutil
-    
-master = mavutil.mavlink_connection('udpin:localhost:14551')
-master.wait_heartbeat()
+from mav_init import master
 
 def land(): #Lands the drone at its current x,y position
     master.mav.command_long_send(master.target_system, master.target_component,
