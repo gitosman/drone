@@ -110,7 +110,12 @@ master.motors_armed_wait()
 print('Armed!')
 
 # mode set
-master.set_mode(mavutil.mavlink.MAV_MODE_GUIDED_ARMED)
+master.mav.command_long_send(
+    master.target_system,
+    master.target_component,
+    mavutil.mavlink.MAV_CMD_DO_SET_MODE,
+    0, 1, 4, 0, 0, 0, 0, 0
+)
 
 # Continuously output the attitude of the drone
 i = 0
