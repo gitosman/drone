@@ -110,16 +110,7 @@ master.motors_armed_wait()
 print('Armed!')
 
 # mode set
-base_mode = mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED | mavutil.mavlink.MAV_MODE_FLAG_GUIDED_ENABLED
-custom_mode = mavutil.mode_mapping['GUIDED']
-master.set_mode_custom(base_mode, custom_mode)
-
-# Wait for the mode change to be confirmed
-while True:
-    msg = master.recv_match(type='HEARTBEAT', blocking=True)
-    if msg.custom_mode == custom_mode:
-        print("Mode changed to GUIDED")
-        break
+master.set_mode(mavutil.mavlink.MAV_MODE_GUIDED_ARMED)
 
 # Continuously output the attitude of the drone
 i = 0
