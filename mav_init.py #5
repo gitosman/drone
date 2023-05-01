@@ -5,6 +5,7 @@ import math
 
 PAC_NO_RC = 1047998
 
+
 # Functions #
 
 
@@ -21,6 +22,13 @@ def f_att(att):
     pitch = math.degrees(att.pitch)
     yaw = math.degrees(att.yaw)
     return roll, pitch, yaw
+
+
+# def f_altitude(msg):
+#     global altitude
+#     if msg:
+#         altitude = msg.alt / 1000.0  # Convert altitude from millimeters to meters
+#         return altitude
 
 
 def f_battery(battery):
@@ -45,7 +53,7 @@ start = time.time()
 print('Time started')
 # Use code below when you need the time
 
-#f_timer_count(start)
+# f_timer_count(start)
 # print(elapsed_time)
 
 # Request all parameters (#21)
@@ -101,9 +109,19 @@ print('Waiting to arm')
 master.motors_armed_wait()
 print('Armed!')
 
+# mode set
+msg2 = master.mav.command_long_encode(
+    0, 0,
+    mavutil.mavlink.MAV_CMD_NAV_GUIDED_ENABLE,
+    0,
+    1, 0, 0, 0, 0, 0, 0
+)
+
+master.send_mavlink(msg2)
+
 # Continuously output the attitude of the drone
 i = 0
-while i != 2:
+while i != 3:
     # ATTITUDE
     attitude = master.recv_match(type='ATTITUDE', blocking=True)
     f_att(attitude)
@@ -111,9 +129,8 @@ while i != 2:
 
     # ALTITUDE (GPS)
     # msg = master.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
-    # if msg:
-    #     altitude = msg.alt / 1000.0  # Convert altitude from millimeters to meters
-    #     print("Altitude: {:.2f} meters".format(altitude))
+    # f_altitude(msg)
+    # print("Altitude: {:.2f} meters".format(altitude))
 
     # BATTERY
     bat = master.recv_match(type='SYS_STATUS', blocking=True)
@@ -130,3 +147,4 @@ master.mav.command_long_send(
 )
 
 # Can be stopped with Ctrl+C #
+
