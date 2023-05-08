@@ -14,7 +14,7 @@ def tracking():
     master.mav.command_long_send(
         master.target_system,
         master.target_component,
-        mavutil.MAV_CMD_CONDITION_YAW,
+        mavutil.mavlink.MAV_CMD_CONDITION_YAW,
         0, #confirmation
         absolute_angle, #absolute yaw angle
         0, #angular speed
