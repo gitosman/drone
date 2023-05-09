@@ -7,8 +7,8 @@ def distance_movement():
 
     range_lower = 1
     range_upper = 10
-    minimum = distance_to_user - range_lower
-    maximum = distance_to_user - range_upper
+    distance_to_lower = distance_to_user - range_lower
+    distance_to_upper = distance_to_user - range_upper
 
     if distance_to_user < range_lower:
 
@@ -20,7 +20,7 @@ def distance_movement():
             0,
             mavutil.mavlink.MAV_FRAME_LOCAL_NED,
             int(0b110111110110), #ignores everything that isn't in the direction to move forwards or backward
-            minimum,
+            distance_to_lower,
             0,0,
             1, #1m/s
             0,0,0,0,0,0,0
@@ -36,7 +36,7 @@ def distance_movement():
         0,
         mavutil.mavlink.MAV_FRAME_LOCAL_NED,
         int(0b110111110110), #ignores everything that isn't in the direction to move forwards or backward
-        maximum,
+        distance_to_upper,
         0,0,
         1, #1m/s
         0,0,0,0,0,0,0
