@@ -5,6 +5,8 @@ import math
 
 PAC_NO_RC = 1047998
 
+PAC_NO_GPS_NO_BAT = 1043638
+
 
 # Functions #
 
@@ -76,7 +78,7 @@ while True:
 master.mav.param_set_send(
     master.target_system, master.target_component,
     b'ARMING_CHECK',
-    PAC_NO_RC,
+    PAC_NO_GPS_NO_BAT,
     mavutil.mavlink.MAV_PARAM_TYPE_UINT16
 )
 
