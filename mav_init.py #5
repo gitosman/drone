@@ -121,7 +121,7 @@ master.mav.command_long_send(
 
 # Continuously output the attitude of the drone
 i = 0
-while i != 3:
+while i != 1:
     # ATTITUDE
     attitude = master.recv_match(type='ATTITUDE', blocking=True)
     f_att(attitude)
@@ -136,7 +136,6 @@ while i != 3:
     bat = master.recv_match(type='SYS_STATUS', blocking=True)
     f_battery(bat)
     print("Battery Voltage: {:.2f} V".format(battery_voltage))
-    i = i + 1
 
 # Disarm
 master.mav.command_long_send(
