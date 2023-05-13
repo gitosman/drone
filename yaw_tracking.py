@@ -1,3 +1,5 @@
+# Authors : Dilan Parjiea
+
 from pymavlink import mavutil
 from horizon import DEG
 from mav_init import master
