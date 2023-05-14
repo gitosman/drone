@@ -64,7 +64,7 @@ while True:
 
 sup.takeoff(master, 3)
 
-if sup.ack(master).result == 0:
+#if sup.ack(master).result == 0:
 #########################
 #camera = ip.camera_init()
 #timeout = 5
