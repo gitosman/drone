@@ -2,7 +2,7 @@ import datetime
 from pymavlink import mavutil
 
 
-f = open("error.txt", "w")
+f = open("error.txt", "a")
 now = datetime.datetime.now()
 date = now.strftime(f"%d-%m-%Y")
 error_time = now.strftime(f"%H:%M:%S")
