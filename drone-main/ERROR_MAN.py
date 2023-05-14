@@ -4,48 +4,48 @@ from pymavlink import mavutil
 
 f = open("error.txt", "a")
 now = datetime.datetime.now()
-date = now.strftime(f"%d-%m-%Y")
+date = now.strftime(f"%d-%m-%Y\n")
 error_time = now.strftime(f"%H:%M:%S")
 f.write(date)
  
 #camera error
 def camera_error():
         
-    f.write("Camera error at {error_time}")
+    f.write("Camera error at {error_time}\n")
     
 #storage error
 def storage_error():
 
-    f.write("Storage error at {error_time}")
+    f.write("Storage error at {error_time}\n")
 
 #altitude error -> goes above a certain altitude
 def altitude_error():
 
-    f.write("Altitude error at {error_time}")
+    f.write("Altitude error at {error_time}\n")
 
 #ML error
 def ml_error():
 
-    f.write("ML error at {error_time}")
+    f.write("ML error at {error_time}\n")
 
 
 #Jetson error
 def jetson_error():
 
-    f.write("Jetson error at {error_time}")
+    f.write("Jetson error at {error_time}\n")
 
 
 #ardupilot error
 def ardupilot_error():
 
-    f.write("Ardupilot error at {error_time}")
+    f.write("Ardupilot error at {error_time}\n")
 
 def arming_error():
         
-    f.write("Arming error at {error_time}")
+    f.write("Arming error at {error_time}\n")
        
 def disarming_error():
         
-    f.write("Disarming error at {error_time}")
+    f.write("Disarming error at {error_time}\n")
         
 f.close()
