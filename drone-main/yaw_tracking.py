@@ -1,15 +1,16 @@
+# Authors : Dilan Parjiea
+
 from pymavlink import mavutil
 
 
 
 def tracking(master, DEG):
     absolute_angle = abs(DEG)
-    direction = 0
-
+    speed = 0
     if DEG < 0:
-        direction = -1
+        speed = -1
     else:
-        direction = 1
+        speed = 1
 
     master.mav.command_long_send(
         master.target_system,
@@ -17,8 +18,8 @@ def tracking(master, DEG):
         mavutil.mavlink.MAV_CMD_CONDITION_YAW,
         0, #confirmation
         absolute_angle, #absolute yaw angle
-        0, #angular speed
-        direction, #clock-wise or counter clock-wise
+        speed, #angular speed
+        0, #clock-wise or counter clock-wise
         0, #relative
         0,0,0
     )
