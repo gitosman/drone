@@ -1,4 +1,5 @@
 # Authors : Dilan Parjiea
+# Description : Program which contains two functions which yaw the drone based on where the user is positioned, and stop yawing when the user is back in frame
 
 from pymavlink import mavutil
 
