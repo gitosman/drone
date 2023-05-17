@@ -1,3 +1,7 @@
+# Authors : Dilan Parjiea
+# Description : Program which takes in the altitude and uses an equation based on previous data to calculate the ground distance from drone to user, and then
+############### use trigonometry and pythagoras to calulate the actual distance from the drone to user
+
 from pymavlink import mavutil
 from mav_init import master
 import math
