@@ -1,4 +1,6 @@
-#Authors : Dilan Parjiea
+# Authors : Dilan Parjiea
+# Description : Program which contains two functions, first one determines if the user is between two lines, r and l, and finds when they're within the two.
+############### The second function calculates the distance from the nose to hip midpoint y position to be then used in distance_measure.py
 
 import cv2
 
