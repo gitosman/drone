@@ -1,4 +1,5 @@
 # Authors : Dilan Parjiea
+# Description : Program which writes to a text file which logs any errors which could occur, with these error functions being called up by other programs
 
 import datetime
 from pymavlink import mavutil
