@@ -1,3 +1,5 @@
+#Authors : Dilan Parjiea
+
 import cv2
 
 def horizon(NOSE, r, l):
