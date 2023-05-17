@@ -1,3 +1,6 @@
+# Authors : Dilan Parjiea
+# Description : Program which uses distance_measure.py to pitch backwards when the user is too close and pitch forward when the user is too far
+
 from pymavlink import mavutil
 import time
 from mav_init import master
