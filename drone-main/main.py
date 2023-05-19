@@ -1,9 +1,10 @@
 import time
+import cv2
 #time.sleep(10)
 #local imports
 import landmarks as lm
 import image_processing as ip
-#import machine_learning as ml
+import machine_learning as ml
 import gesture_control as gc
 import ERROR_MAN as error
 import mav_init as mavinit
@@ -19,7 +20,8 @@ state = 'Off'
 jetson_status = 'Good'
 
 
-#machinelearn = ml.Machine_learning(0.5, 0.5)
+
+machinelearn = ml.Machine_learning(0.5, 0.5)
 gesturecont = gc.Gesture_control()
 
 
@@ -45,13 +47,6 @@ print(state)
 master = mavinit.connect()
 arm = mavinit.arm(master)
 
-while True:
-	if arm == True:
-		state = 'Armed'
-		print(state)
-		break
-	else:
-		continue
     #move onto SUP
 ####STARTUP_PROCEDURE####
 #start-up procedure/gesture control: check all vital systems on jetson and fc and then take-off, 
@@ -83,17 +78,28 @@ sup.takeoff(master, 3)
 state = "Airborne User-Searching"
 print(state)
 camera = ip.camera_init()
-while camera.isopened():
-	frame = ip.video_stream(camera)
-	results = machinelearn.ml_process(frame)
-	landmarks = lm.Landmarks(results)
-	detection = gesturecont.gesture_detection(lm)
-	confidence = gesturecont.confidence(2)
- 	sup.yaw(master, 1) #wait time for detection to be registered
-	if detection == "X" and confidence == True: #break sup on detection of user with crossed arms
-	break
-	else:
-		continue
+while camera.isOpened():
+    frame = ip.video_stream(camera)
+    results = machinelearn.ml_process(frame)
+    if (results.pose_landmarks is None):
+    # call 'search for user' function.
+        print("LOST DETECTION")
+        continue
+    else:
+         
+        landmarks = lm.Landmarks(results)
+        detection = gesturecont.gesture_detection(landmarks)
+        confidence = gesturecont.confidence(detection, 0)
+        altitude = master.recv_match(type='LOCAL_POSITION_NED', blocking=True)
+        print(altitude.z)
+        if altitude.z < -2.8:
+            sup.yaw(master, 0.5) #wait time for detection to be registered
+            if detection == "X" and confidence == True: #break sup on detection of user with crossed arms
+                break
+            else:
+                continue
+        else:
+             continue
 
 state = "Airborne User-Tracking"
 print(state)
@@ -104,22 +110,34 @@ print(state)
 #monitor users relative yaw to drone
 #monitor users distance to to drone
  
-while True:
-	frame = imgprocess.video_stream(jetson_status, camera)
-	results = machinelearn.ml_process(frame)
-	landmarks = lm.Landmarks(results)
-	detection = gesturecont.gesture_detection(lm)
-	confidence = gesturecont.confidence(1) #wait time for detection to be registered
-	hzn.horizon(landmarks.NOSE, 0.125, -0.125)
-	if detection == "i" and confidence == True:
-		tc.tracking()
-		while True:
-			if tc.yaw_tracking_waiting == True:
-	    			break
-			else:
-	    			continue
-	else:
-    		continue
+while camera.isOpened():
+    frame = ip.video_stream(camera)
+    results = machinelearn.ml_process(frame)
+    if (results.pose_landmarks is None):
+    # call 'search for user' function.
+        print("LOST DETECTION")
+        continue
+    else:
+         
+        landmarks = lm.Landmarks(results)
+        detection = gesturecont.gesture_detection(landmarks)
+        confidence = gesturecont.confidence(detection, 0.5)
+        DEG = hzn.horizon(landmarks.NOSE, 0.125, -0.125)
+        if detection == "i" and confidence == True:
+            tc.tracking(master, DEG[3])
+            deg = str(abs(round(DEG[3])))
+            cv2.putText(frame, deg, (7,70), cv2.FONT_HERSHEY_SIMPLEX, 3, (100, 0, 100), 3, cv2.LINE_AA)
+            cv2.imshow('frame', frame)
+            if cv2.waitKey(5) & 0xFF ==27:
+                break
+                
+            # while True:
+            #     if tc.yaw_tracking_waiting == True:
+            #             break
+            #     else:
+            #         continue
+        else:
+                continue
         
 
 
